@@ -14,7 +14,7 @@ MAX_POSTS = 5
 def index():
 	if len(request.args):
 		# Le pasamos una categoria
-		categoria = db(db.categoria.nombre==request.args[0]).select()
+		categoria = db(db.categoria.identifier==request.args[0]).select()
 		categoria = categoria[0] if categoria else None
 		if not categoria:
 			return T('Categoría desconocida')
@@ -36,6 +36,10 @@ def post():
 	else:
 		raise HTTP(404)
 
+#@auth.requires_login()
+def newpost():
+	form = crud.create(db.post)
+	return dict(form=form)
 
 def user():
     """

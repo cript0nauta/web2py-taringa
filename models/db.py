@@ -83,7 +83,8 @@ use_janrain(auth, filename='private/janrain.key')
 # auth.enable_record_versioning(db)
 
 db.define_table('categoria',
-		Field('nombre')
+		Field('nombre'),
+		Field('identifier'),
 		)
 
 db.define_table('post',
@@ -94,7 +95,15 @@ db.define_table('post',
 		Field('puntos', 'integer'),
 		)
 db.post.autor.readable = False
-db.post.autor.writeable = False
+db.post.autor.writable = False
+db.post.autor.default = auth.user.id #if auth.user else None
+#db.post.autor.requires = IS_NOT_EMPTY()
+
+db.post.puntos.readable = False
+db.post.puntos.writable = False
+db.post.puntos.default = 0
+
+db.post.categoria.requires = IS_IN_DB(db, db.categoria.id, '%(nombre)s' )
 
 db.define_table('comentario',
 		Field('post', db.post),
