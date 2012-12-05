@@ -2,3 +2,7 @@
 *.pyo
 *.swp
 *~
+.log
+sessions/*
+databases/*
+errors/*
