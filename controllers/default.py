@@ -9,10 +9,11 @@
 ## - call exposes all registered services (none by default)
 #########################################################################
 
+MAX_POSTS = 5
 
 def index():
 	categorias = db().select(db.categoria.ALL)
-	p = db().select(db.post.ALL)
+	p = db().select(db.post.ALL)[:MAX_POSTS]
 	return dict(categorias = categorias,
 			posts = p)
 

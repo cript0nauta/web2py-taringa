@@ -1,0 +1,11 @@
+{{extend 'layout.html'}}
+{{from gluon.contrib.markdown import WIKI}}
+
+<header>
+	Autor: {{=post.autor.first_name}} {{=post.autor.last_name}}
+	<h2>{{=post.titulo}}</h2>
+</header>
+
+<article>
+	{{=WIKI(post.contenido)}}
+</article>

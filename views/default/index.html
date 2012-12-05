@@ -5,7 +5,7 @@
             <h3>Categorías</h3>
 	    <ul>
 		{{for categoria in categorias:}}
-			{{=LI(A(categoria.nombre))}}
+			{{=LI(A(categoria.nombre, _href=URL(f='index', args=categoria.nombre) ))}}
 		{{pass}}
 	    </ul>
 {{end}}

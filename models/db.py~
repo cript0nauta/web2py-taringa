@@ -89,10 +89,11 @@ db.define_table('categoria',
 db.define_table('post',
 		Field('autor',db.auth_user, required=True),
 		Field('titulo'),
-		Field('categoria'),
+		Field('categoria', db.categoria),
 		Field('contenido', 'text'),
 		Field('puntos', 'integer'),
 		)
+db.post.autor.requires = IS_IN_DB(db, 'auth_user.id', '$(name)s')
 db.post.autor.readable = False
 db.post.autor.writeable = False
 
