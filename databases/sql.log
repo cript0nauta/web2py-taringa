@@ -69,3 +69,17 @@ CREATE TABLE post(
     puntos INTEGER
 );
 success!
+timestamp: 2012-12-05T15:53:27.508315
+CREATE TABLE categoria(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre CHAR(512)
+);
+success!
+timestamp: 2012-12-05T15:53:27.814924
+CREATE TABLE comentario(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post INTEGER REFERENCES post (id) ON DELETE CASCADE,
+    autor INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    contenido CHAR(512)
+);
+success!

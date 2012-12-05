@@ -82,7 +82,7 @@ use_janrain(auth, filename='private/janrain.key')
 ## after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
 
-db.define_table('categorias',
+db.define_table('categoria',
 		Field('nombre')
 		)
 
@@ -93,8 +93,13 @@ db.define_table('post',
 		Field('contenido', 'text'),
 		Field('puntos', 'integer'),
 		)
+db.post.autor.readable = False
+db.post.autor.writeable = False
 
 db.define_table('comentario',
 		Field('post', db.post),
 		Field('autor', db.auth_user),
 		Field('contenido')
+		)
+db.comentario.autor.readable = False
+db.comentario.autor.writeable = False
