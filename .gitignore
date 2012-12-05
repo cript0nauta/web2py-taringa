@@ -1,7 +1,4 @@
 *.pyc
 *.pyo
 *.swp
-databases/*
 *~
-sessions/*
-errors/*
