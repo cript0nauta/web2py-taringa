@@ -12,8 +12,17 @@
 MAX_POSTS = 5
 
 def index():
+	if len(request.args):
+		# Le pasamos una categoria
+		categoria = db(db.categoria.nombre==request.args[0]).select()
+		categoria = categoria[0] if categoria else None
+		if not categoria:
+			return T('Categoría desconocida')
+	else:
+		categoria = None
 	categorias = db().select(db.categoria.ALL)
-	p = db().select(db.post.ALL)[:MAX_POSTS]
+	d = db(db.post.categoria==categoria.id) if categoria else db()
+	p = d.select(db.post.ALL)[:MAX_POSTS]
 	return dict(categorias = categorias,
 			posts = p)
 
