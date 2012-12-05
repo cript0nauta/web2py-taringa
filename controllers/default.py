@@ -11,15 +11,20 @@
 
 
 def index():
-    """
-    example action using the internationalization operator T and flash
-    rendered by views/default/index.html or views/generic.html
+	categorias = db().select(db.categoria.ALL)
+	p = db().select(db.post.ALL)
+	return dict(categorias = categorias,
+			posts = p)
 
-    if you need a simple wiki simple replace the two lines below with:
-    return auth.wiki()
-    """
-    response.flash = T("Welcome to web2py!")
-    return dict()
+def post():
+	if len(request.args)==1:
+		post = db(db.post.id==request.args[0]).select()
+		post = post[0] if post else None
+		if not post:
+			raise HTTP(404)
+		return dict(post=post)
+	else:
+		raise HTTP(404)
 
 
 def user():

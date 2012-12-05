@@ -89,7 +89,7 @@ db.define_table('categoria',
 db.define_table('post',
 		Field('autor',db.auth_user, required=True),
 		Field('titulo'),
-		Field('categoria'),
+		Field('categoria', db.categoria),
 		Field('contenido', 'text'),
 		Field('puntos', 'integer'),
 		)
