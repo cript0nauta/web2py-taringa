@@ -44,7 +44,7 @@ auth = Auth(db)
 crud, service, plugins = Crud(db), Service(), PluginManager()
 
 ## create all tables needed by auth if not custom tables
-auth.define_tables(username=False, signature=False)
+auth.define_tables(username=True, signature=False)
 
 ## configure email
 mail = auth.settings.mailer
@@ -96,8 +96,8 @@ db.define_table('post',
 		)
 db.post.autor.readable = False
 db.post.autor.writable = False
-db.post.autor.default = auth.user.id #if auth.user else None
-#db.post.autor.requires = IS_NOT_EMPTY()
+db.post.autor.default = auth.user.id if auth.user else None
+db.post.autor.requires = IS_NOT_EMPTY()
 
 db.post.puntos.readable = False
 db.post.puntos.writable = False

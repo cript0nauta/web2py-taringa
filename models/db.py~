@@ -84,11 +84,8 @@ use_janrain(auth, filename='private/janrain.key')
 
 db.define_table('categoria',
 		Field('nombre'),
+		Field('identifier'),
 		)
-class VirtualField:
-	def identifier(self):
-		return self.categoria.nombre.replace(' ','_')
-db.categoria.virtualfields.append(VirtualField())
 
 db.define_table('post',
 		Field('autor',db.auth_user, required=True),
@@ -99,8 +96,8 @@ db.define_table('post',
 		)
 db.post.autor.readable = False
 db.post.autor.writable = False
-db.post.autor.default = auth.user.id #if auth.user else None
-#db.post.autor.requires = IS_NOT_EMPTY()
+db.post.autor.default = auth.user.id if auth.user else None
+db.post.autor.requires = IS_NOT_EMPTY()
 
 db.post.puntos.readable = False
 db.post.puntos.writable = False

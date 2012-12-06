@@ -2,10 +2,14 @@
 {{from gluon.contrib.markdown import WIKI}}
 
 <header>
-	Autor: {{=post.autor.first_name}} {{=post.autor.last_name}}
+	Autor: {{=post.autor.username}}
 	<h2>{{=post.titulo}}</h2>
 </header>
 
 <article>
 	{{=WIKI(post.contenido)}}
 </article>
+
+<footer>
+	Puntos: {{=post.puntos}}
+</footer>
