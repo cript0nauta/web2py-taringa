@@ -2,8 +2,10 @@
 {{from gluon.contrib.markdown import WIKI}}
 
 <header>
-	Autor: {{=post.autor.username}}
-	<h2>{{=post.titulo}}</h2>
+	Autor: {{=post.autor.username}} <br>
+	{{if post.autor.id == auth.user.id:}}
+	{{=A(T('Editar post'), _href=URL(f='edit',args=post.id))}}<br>
+	{{pass}}
 </header>
 
 <article>

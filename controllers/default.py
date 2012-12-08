@@ -36,10 +36,20 @@ def post():
 	else:
 		raise HTTP(404)
 
-#@auth.requires_login()
+@auth.requires_login()
 def newpost():
 	form = crud.create(db.post)
 	return dict(form=form)
+
+def edit():
+	""" Editar un post """
+	post = db(db.post.id == request.args(0)).select()
+	if post:
+		form = crud.update(db.post, post[0].id, \
+				next=URL(f='post',args=post[0].id))
+		return dict(form = form)
+	else:
+		raise HTTP(404)
 
 def user():
     """
