@@ -1,0 +1,16 @@
+{{extend 'layout.html'}}
+
+{{if user:}}
+<header>
+		<h2>{{=user.first_name}} {{=user.last_name}}</h2>
+		{{=puntos}} puntos
+</header>
+<div>
+        <header><h3>Posts</h3></header>
+		<ul>
+		{{for post in posts:}}
+				{{=LI(A(post.titulo, _href=URL(f='post',args=post.id)))}}
+		{{pass}}
+		</ul>
+</div>
+{{pass}}

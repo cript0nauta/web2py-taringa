@@ -62,6 +62,17 @@ def post():
 	else:
 		raise HTTP(404)
 
+def profile():
+		""" Ver el perfil de algún usuario """
+		user = db(db.auth_user.username==request.args(0)).select()
+		if not user:
+				response.flash='El perfil no existe'
+				return dict(user=None)
+		user = user[0]
+		posts = db(db.post.autor==user.id).select()
+		puntos = sum([post.puntos for post in posts])
+		return dict(user=user, posts=posts, puntos=puntos)
+
 @auth.requires_login()
 def newpost():
 	form = crud.create(db.post)
