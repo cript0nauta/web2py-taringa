@@ -25,9 +25,12 @@ response.google_analytics_id = None
 
 response.menu = [
     (T('Home'), False, URL('default', 'index'), []),
+    
 ]
 if auth.is_logged_in():
 	response.menu += (T('Nuevo post'), False, URL(f='newpost'), []),
+	response.menu += (T('Mi perfil'), False, \
+			URL(f='profile',args=auth.user.username), []),
 
 #########################################################################
 ## provide shortcuts for development. remove in production
