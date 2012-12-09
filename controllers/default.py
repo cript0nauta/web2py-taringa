@@ -20,8 +20,27 @@ def tops():
 		for u in db().select(db.auth_user.ALL):
 				p = sum([p.puntos for p in u.post.select()])
 				users[u.username] = p
-		users =  sorted(users.items(), key = lambda k: k[1], reverse = True)[:TOP_POSTS]
-		return dict(posts=posts, users=users)
+		users =  sorted(users.items(), key = lambda k: k[1], \
+						reverse = True)[:TOP_POSTS]
+		
+		html_posts = ''.join([TR(
+				TD(A(p.titulo, _href=URL(f='post',args=p.id))), 
+				TD(p.puntos) ).xml() for p in posts])
+		html_posts = DIV(H3(T("Top posts")),
+						TABLE(
+								TR(TH('Post'), TH(T('Puntos'))),
+								XML(html_posts)
+								),
+						)
+
+		html_users = ''.join([TR(TD(u), TD(p)).xml() for u,p in users])
+		html_users = DIV(H3(T('Top usuarios')),
+						TABLE(
+								TR( TH(T('Usuario')), TH(T('Puntos')) ),
+								XML(html_users),
+								))
+
+		return html_posts + html_users
 
 def index():
 	if len(request.args):
@@ -35,9 +54,17 @@ def index():
 	categorias = db().select(db.categoria.ALL)
 	d = db(db.post.categoria==categoria.id) if categoria else db()
 	p = d.select(db.post.ALL, orderby=~db.post.id)[:MAX_POSTS]
+	tops_form = FORM(
+					INPUT(_name='tiempo', _type="submit", _value=T("Diario")),
+					INPUT(_name='tiempo', _type="submit", _value=T("Semanal")),
+					INPUT(_name='tiempo', _type="submit", _value=T("Mensual")),
+					INPUT(_name='tiempo', _type="submit", _value=T("Siempre")),
+					INPUT(_name='default', _type="hidden", _value=T("Semanal")),
+					_onsubmit = "ajax('tops',['tiempo'],'tops'); return false",
+					)
 	return dict(categorias = categorias,
 			posts = p,
-			tops = tops())
+			tops_form = tops_form)
 
 def post():
 	if len(request.args)==1:

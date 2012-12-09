@@ -11,6 +11,15 @@
 				</ul>
 		</div>
 
+		{{=tops_form}}
+		<script type="text/javascript">
+			// Cargamos los posts semanales por defecto
+			ajax('tops',['default'],'tops');
+		</script>
+
+		<div id="tops"></div>
+
+		<!--
 		<div>
 				<h3>Top usuarios</h3>
 				<table>
@@ -18,9 +27,9 @@
 				                <th>Usuario</th>
 				                <th>Puntos</th>
 				        </tr>
-						{{for e in tops['users']:}}
-							{{=TR( TD(A(e[0],_href=URL(f='profile',args=e[0]))), TD(e[1]) )}}
-						{{pass}}
+						{{#for e in tops['users']:}}
+							{{#=TR( TD(A(e[0],_href=URL(f='profile',args=e[0]))), TD(e[1]) )}}
+						{{#pass}}
 				</table>
 		</div>
 
@@ -31,11 +40,12 @@
 						        <th>Post</th>
 						        <th>Puntos</th>
 						</tr>
-						{{for p in tops['posts']:}}
-							{{=TR( TD(A(p.titulo, _href=URL(f='post', args=p.id))), TD(p.puntos) )}}
-						{{pass}}
+						{{#for p in tops['posts']:}}
+							{{#=TR( TD(A(p.titulo, _href=URL(f='post', args=p.id))), TD(p.puntos) )}}
+						{{#pass}}
 				</table>
 		</div>
+		-->
 {{end}}
 
 

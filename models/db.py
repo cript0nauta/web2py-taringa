@@ -59,6 +59,7 @@ db.define_table(
 	Field('username', length=40),
 	Field('puntos','integer'), #puntos que puede dar
 	Field('avatar','upload'),
+	Field('creado','datetime'),
 	)
 custom_auth_table = db[auth.settings.table_user_name] # get the custom_auth_table
 custom_auth_table.username.requires = IS_NOT_IN_DB(db, custom_auth_table.username)
@@ -71,6 +72,7 @@ custom_auth_table.email.requires = [
 	IS_EMAIL(error_message=auth.messages.invalid_email),
 	IS_NOT_IN_DB(db, custom_auth_table.email)]
 auth.settings.table_user = custom_auth_table # tell auth to use custom_auth_table
+
 custom_auth_table.puntos.default = 3
 custom_auth_table.puntos.writable = False
 custom_auth_table.puntos.readable = False
@@ -127,11 +129,16 @@ db.define_table('post',
 		Field('categoria', db.categoria),
 		Field('contenido', 'text'),
 		Field('puntos', 'integer'),
+		Field('creado','datetime'),
 		)
 db.post.autor.readable = False
 db.post.autor.writable = False
 db.post.autor.default = auth.user.id if auth.user else None
 db.post.autor.requires = IS_NOT_EMPTY()
+
+db.post.creado.readable = False
+db.post.creado.writable = False
+db.post.creado.default = request.now
 
 db.post.puntos.readable = False
 db.post.puntos.writable = False
