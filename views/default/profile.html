@@ -2,8 +2,13 @@
 
 {{if user:}}
 <header>
+		{{if auth.user.id == user.id:}}
+				{{=A(T('[ Editar perfil ]'),_href=URL(f='user', args='profile'))}}
+				{{=A(T('[ Cambiar contraseña ]'),_href=URL(f='user', args='change_password'))}}
+		{{pass}}
 		<h2>{{=user.first_name}} {{=user.last_name}}</h2>
-		{{=puntos}} puntos
+		{{=puntos}} puntos<br>
+		{{=T('New Full User') if puntos>=50 else T('Novato')}}<br>
 </header>
 <div>
         <header><h3>Posts</h3></header>

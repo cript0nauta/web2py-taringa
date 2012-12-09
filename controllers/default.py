@@ -22,7 +22,7 @@ def index():
 		categoria = None
 	categorias = db().select(db.categoria.ALL)
 	d = db(db.post.categoria==categoria.id) if categoria else db()
-	p = d.select(db.post.ALL)[:MAX_POSTS]
+	p = d.select(db.post.ALL, orderby=~db.post.id)[:MAX_POSTS]
 	return dict(categorias = categorias,
 			posts = p)
 
