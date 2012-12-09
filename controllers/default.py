@@ -77,6 +77,7 @@ def post():
 
 def profile():
 		""" Ver el perfil de algún usuario """
+		response.files.append(URL(c='static',f='css/avatar.css'))
 		user = db(db.auth_user.username==request.args(0)).select()
 		if not user:
 				response.flash='El perfil no existe'

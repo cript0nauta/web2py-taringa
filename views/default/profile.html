@@ -7,6 +7,7 @@
 				{{=A(T('[ Cambiar contraseña ]'),_href=URL(f='user', args='change_password'))}}
 		{{pass}}
 		<h2>{{=user.first_name}} {{=user.last_name}}</h2>
+		{{=IMG(_src=URL(f='download',args=user.avatar), _class='avatar') if user.avatar else IMG(_src=URL(c='static',f='images/default_avatar.png'))}}<br>
 		{{=puntos}} puntos<br>
 		{{=T('New Full User') if puntos>=50 else T('Novato')}}<br>
 </header>
