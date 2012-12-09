@@ -36,7 +36,8 @@ def tops():
 
 		users = {}
 		for u in db().select(db.auth_user.ALL):
-				p = sum([p.puntos for p in u.post.select()])
+				p = sum([p.puntos for p in u.post.select() \
+								if (not dias) or p.creado >= min_time])
 				users[u.username] = p
 		users =  sorted(users.items(), key = lambda k: k[1], \
 						reverse = True)[:TOP_POSTS]
