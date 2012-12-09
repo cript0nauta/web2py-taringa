@@ -33,7 +33,8 @@ def tops():
 								),
 						)
 
-		html_users = ''.join([TR(TD(u), TD(p)).xml() for u,p in users])
+		html_users = ''.join([TR(TD(A(u, _href=URL(f='profile',args=u) )),\
+						TD(p)).xml() for u,p in users])
 		html_users = DIV(H3(T('Top usuarios')),
 						TABLE(
 								TR( TH(T('Usuario')), TH(T('Puntos')) ),
@@ -61,6 +62,7 @@ def index():
 					INPUT(_name='tiempo', _type="submit", _value=T("Siempre")),
 					INPUT(_name='default', _type="hidden", _value=T("Semanal")),
 					_onsubmit = "ajax('tops',['tiempo'],'tops'); return false",
+					_id="tops_form",
 					)
 	return dict(categorias = categorias,
 			posts = p,
