@@ -129,7 +129,11 @@ db.define_table('post',
 		Field('categoria', db.categoria),
 		Field('contenido', 'text'),
 		Field('puntos', 'integer'),
+		Field('creado','datetime'),
 		)
+db.post.categoria.readable = False
+db.post.categoria.writable = False
+
 db.post.autor.readable = False
 db.post.autor.writable = False
 db.post.autor.default = auth.user.id if auth.user else None

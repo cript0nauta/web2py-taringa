@@ -131,6 +131,8 @@ db.define_table('post',
 		Field('puntos', 'integer'),
 		Field('creado','datetime'),
 		)
+db.post.categoria.requires = IS_NOT_EMPTY()
+
 db.post.autor.readable = False
 db.post.autor.writable = False
 db.post.autor.default = auth.user.id if auth.user else None

@@ -9,12 +9,30 @@
 ## - call exposes all registered services (none by default)
 #########################################################################
 
+import datetime
+
 MAX_POSTS = 5 # Posts a mostrar en el index
 TOP_POSTS = 3 # Posts a mostrar en la sección tops
 
 def tops():
 		""" Retorna los top posts y usuarios """
-		posts = db(db.post.id>0).select(orderby=~db.post.puntos)[:TOP_POSTS]
+		tiempos = {
+				T('Diario') : 1,
+				T('Semanal') : 7,
+				T('Mensual') : 30,
+				T('Siempre') : 0,
+				}
+		if not request.vars.tiempo in tiempos.keys():
+				return T('Campos incorrectos')
+		dias = tiempos[request.vars.tiempo]
+
+		if dias:
+				# Establecemos una fecha límite para los posts
+				min_time = request.now - datetime.timedelta(days=dias)
+				filtro = db(db.post.creado >= min_time)
+		else:
+				filtro = db(db.post.id>0)
+		posts = filtro.select(orderby=~db.post.puntos)[:TOP_POSTS]
 
 		users = {}
 		for u in db().select(db.auth_user.ALL):
@@ -41,7 +59,7 @@ def tops():
 								XML(html_users),
 								))
 
-		return html_posts + html_users
+		return H2(request.vars.tiempo or request.vars.default) + html_posts + html_users
 
 def index():
 	if len(request.args):
@@ -56,12 +74,17 @@ def index():
 	d = db(db.post.categoria==categoria.id) if categoria else db()
 	p = d.select(db.post.ALL, orderby=~db.post.id)[:MAX_POSTS]
 	tops_form = FORM(
-					INPUT(_name='tiempo', _type="submit", _value=T("Diario")),
-					INPUT(_name='tiempo', _type="submit", _value=T("Semanal")),
-					INPUT(_name='tiempo', _type="submit", _value=T("Mensual")),
-					INPUT(_name='tiempo', _type="submit", _value=T("Siempre")),
-					INPUT(_name='default', _type="hidden", _value=T("Semanal")),
-					_onsubmit = "ajax('tops',['tiempo'],'tops'); return false",
+					#INPUT(_name='tiempo', _type="submit", _value=T("Diario")),
+					#INPUT(_name='tiempo', _type="submit", _value=T("Semanal")),
+					#INPUT(_name='tiempo', _type="submit", _value=T("Mensual")),
+					#INPUT(_name='tiempo', _type="submit", _value=T("Siempre")),
+					#INPUT(_name='tiempo', _type="hidden", _value=T("Semanal")),
+					XML(''.join([SPAN(INPUT(
+								_name = 'tiempo',
+								_type = 'radio',
+								_value = T(v),
+							),T(v),BR()).xml() for v in \
+									['Diario','Semanal','Mensual','Siempre']])),
 					_id="tops_form",
 					)
 	return dict(categorias = categorias,
