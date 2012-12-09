@@ -9,7 +9,19 @@
 ## - call exposes all registered services (none by default)
 #########################################################################
 
-MAX_POSTS = 5
+MAX_POSTS = 5 # Posts a mostrar en el index
+TOP_POSTS = 3 # Posts a mostrar en la sección tops
+
+def tops():
+		""" Retorna los top posts y usuarios """
+		posts = db(db.post.id>0).select(orderby=~db.post.puntos)[:TOP_POSTS]
+
+		users = {}
+		for u in db().select(db.auth_user.ALL):
+				p = sum([p.puntos for p in u.post.select()])
+				users[u.username] = p
+		users =  sorted(users.items(), key = lambda k: k[1], reverse = True)[:TOP_POSTS]
+		return dict(posts=posts, users=users)
 
 def index():
 	if len(request.args):
@@ -24,7 +36,8 @@ def index():
 	d = db(db.post.categoria==categoria.id) if categoria else db()
 	p = d.select(db.post.ALL, orderby=~db.post.id)[:MAX_POSTS]
 	return dict(categorias = categorias,
-			posts = p)
+			posts = p,
+			tops = tops())
 
 def post():
 	if len(request.args)==1:
