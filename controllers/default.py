@@ -32,7 +32,33 @@ def post():
 		post = post[0] if post else None
 		if not post:
 			raise HTTP(404)
-		return dict(post=post)
+		if auth.user:
+			user = db(db.auth_user.id==auth.user.id).select()[0]
+			inputs = [SPAN(INPUT(_type='radio', 
+						_name='puntos', _value=i,
+						requires = IS_INT_IN_RANGE(1,user.puntos+1)), 
+						i,XML('<br>')) \
+					for i in range(1,user.puntos + 1)]
+			if not inputs:
+					inputs.append(T('No te quedan puntos para dar hoy'))
+			else:
+					inputs.append(INPUT(_type='submit', _value=T('Puntuar')))
+			puntuar = FORM(*inputs)
+			if puntuar.accepts(request.vars, session):
+					response.flash = T('Puntuaste el post con %s puntos',\
+									request.vars.puntos)
+					puntos_post = post.puntos + int(request.vars.puntos)
+					db(db.post.id==post.id).update(puntos = puntos_post)
+
+					puntos_usr = user.puntos - int(request.vars.puntos)
+					db(db.auth_user.id==auth.user.id).update(puntos=puntos_usr)
+
+					redirect(URL(f='post',args=post.id))
+			elif puntuar.errors:
+					response.flash = T('Datos incorrectos')
+		else:
+			puntuar = None
+		return dict(post=post, puntuar=puntuar)
 	else:
 		raise HTTP(404)
 
