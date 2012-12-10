@@ -133,6 +133,7 @@
 'Error logs for "%(app)s"': 'Bitácora de errores en "%(app)s"',
 'errors': 'errores',
 'Errors': 'Errors',
+'Este post no te pertenece': 'Este post no te pertenece',
 'export as csv file': 'exportar como archivo CSV',
 'exposes': 'expone',
 'extends': 'extiende',

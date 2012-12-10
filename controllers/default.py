@@ -73,7 +73,7 @@ def index():
 		categoria = None
 	categorias = db().select(db.categoria.ALL)
 	d = db(db.post.categoria==categoria.id) if categoria else db()
-	p = d.select(db.post.ALL, orderby=~db.post.id)[:MAX_POSTS]
+	p = d.select(db.post.ALL, orderby=~db.post.creado)[:MAX_POSTS]
 	tops_form = FORM(
 					#INPUT(_name='tiempo', _type="submit", _value=T("Diario")),
 					#INPUT(_name='tiempo', _type="submit", _value=T("Semanal")),
@@ -149,6 +149,9 @@ def edit():
 	""" Editar un post """
 	post = db(db.post.id == request.args(0)).select()
 	if post:
+		if post[0].autor.id != auth.user.id:
+				response.flash, error = [T('Este post no te pertenece')] * 2
+				return dict(form=None, error=error)
 		form = crud.update(db.post, post[0].id, \
 				next=URL(f='post',args=post[0].id))
 		return dict(form = form)
