@@ -77,6 +77,22 @@ custom_auth_table.puntos.default = 3
 custom_auth_table.puntos.writable = False
 custom_auth_table.puntos.readable = False
 
+def puntos_totales(user):
+		""" Retorna la cantidad de puntos que tiene el usuario especificado """
+		user = db.auth_user(user)
+		posts = db(db.post.autor==user.id).select()
+		puntos = sum([post.puntos for post in posts])
+		return puntos
+custom_auth_table.puntos_totales = puntos_totales
+def rango(user):
+		""" Retorna la traducción de Novato o New Full User según el rango
+		del usuario """
+		if db( (db.post.puntos>=50) & (db.post.autor==user) ).select():
+				return T("New Full User")
+		else:
+				return T("Novato")
+custom_auth_table.rango = rango
+
 ## create all tables needed by auth if not custom tables
 auth.define_tables(username=True, signature=False)
 #auth.settings.extra_fields[auth.settings.table_user_name] = \
