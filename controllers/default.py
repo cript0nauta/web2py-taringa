@@ -124,7 +124,19 @@ def post():
 					response.flash = T('Datos incorrectos')
 		else:
 			puntuar = None
-		return dict(post=post, puntuar=puntuar)
+		comentarios = post.comentario.select()
+		if auth.user:
+				db.comentario.post.default = post.id
+				db.comentario.autor.default = auth.user.id
+				comment_form = crud.create(db.comentario,
+								)#_next = request.env.path_info)
+		else:
+				comment_form = None
+		
+		return dict(post=post, 
+						puntuar=puntuar, 
+						comentarios = comentarios,
+						comment_form = comment_form,)
 	else:
 		raise HTTP(404)
 

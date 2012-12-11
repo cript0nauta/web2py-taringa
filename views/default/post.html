@@ -15,4 +15,23 @@
 <footer>
 	Puntos: {{=post.puntos}}<br>
 	{{=puntuar}}
+
+	<h4>Comentarios</h4>
+	{{if comentarios:}}
+	{{for comentario in comentarios:}}
+	<article>
+			<header><strong>{{=A(comentario.autor.username, _href=URL(f='profile',args=comentario.autor.username))}} dijo:</strong></header>
+			{{=comentario.contenido}}
+	</article>
+	{{pass}}
+	{{else:}}
+	<h5>{{=T('Este post no tiene comentarios, soyez le premier')}}</h5>
+	{{pass}}
+
+	{{if comment_form:}}
+		<h3>{{=T('Haz un comentario')}}</h3>
+		{{=comment_form}}
+	{{else:}}
+		{{=T('Tienes que estar logueado para poder comentar')}}
+	{{pass}}
 </footer>
