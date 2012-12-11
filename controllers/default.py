@@ -60,11 +60,22 @@ def tops():
 								XML(html_users),
 								))
 
-		return H2(request.vars.tiempo or request.vars.default) + html_posts + html_users
+		return H2(request.vars.tiempo or request.vars.default) + \
+						html_posts + html_users
 
 def posts():
 		"""Retorna vía AJAX todos los posts de un usuario"""
-		pass
+		user = db.auth_user(request.vars.u) or redirect(URL(f='index'))
+		posts = user.post.select(orderby=~db.post.creado)
+		return UL(*[LI(A(post.titulo, _href=URL(f='post',args=post.id)))\
+						for post in posts])
+def comentarios():
+		"""Retorna vía AJAX todos los comentarios de un usuario"""
+		user = db.auth_user(request.vars.u) or redirect(URL(f='index'))
+		comentarios = user.comentario.select(orderby=~db.comentario.id)
+		return UL(*[LI(T('En el post'),' ',A(c.post.titulo,_href= \
+			URL(f='post',args=c.post.id)+'#comment-'+str(c.id))) \
+			for c in comentarios])
 
 def index():
 	if len(request.args):

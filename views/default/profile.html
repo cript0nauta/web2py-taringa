@@ -12,20 +12,27 @@
 		{{=globals()['db'].auth_user.rango(user.id)}}<br>
 </header>
 
+<input type="hidden" name="u" value="{{=user.id}}"/>
 <div class="columna">
         <header><h3>{{=T('Posts')}}</h3></header>
-		<ul>
-		{{for post in posts:}}
-				{{=LI(A(post.titulo, _href=URL(f='post',args=post.id)))}}
-		{{pass}}
-		</ul>
+		<div id="posts">
+				<ul>
+				{{for post in posts:}}
+						{{=LI(A(post.titulo, _href=URL(f='post',args=post.id)))}}
+				{{pass}}
+				</ul>
+				<a href="#" class="btn" onclick="ajax('{{=URL(f='posts')}}', ['u'], 'posts')">{{=T("Cargar más posts")}}</a>
+		</div>
 </div>
 <div class="columna">
 		<header><h3>{{=T('Comentarios')}}</h3></header>
-		<ul>
-		{{for comentario in comentarios:}}
-				{{=LI(T("En el post"),' ',A(comentario.contenido, _href=URL(f='post',args=comentario.post)+'#comment-'+str(comentario.id) ))}}	
-		{{pass}}
-		</ul>
+		<div id="comentarios">
+				<ul>
+				{{for comentario in comentarios:}}
+						{{=LI(T("En el post"),' ',A(comentario.contenido, _href=URL(f='post',args=comentario.post)+'#comment-'+str(comentario.id) ))}}	
+				{{pass}}
+				</ul>
+				<a onclick="ajax('{{=URL(f='comentarios')}}', ['u'], 'comentarios')" href="#" class="btn">{{=T("Cargar más comentarios")}}</a>
+		</div>
 </div>
 {{pass}}

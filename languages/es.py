@@ -53,6 +53,8 @@
 'Cannot compile: there are errors in your app.        Debug it, correct errors and try again.': 'No se puede compilar: hay errores en su aplicación. Depure, corrija errores y vuelva a intentarlo.',
 'cannot create file': 'no es posible crear archivo',
 'cannot upload file "%(filename)s"': 'no es posible subir archivo "%(filename)s"',
+'Cargar más comentarios': 'Cargar más comentarios',
+'Cargar más posts': 'Cargar más posts',
 'Categoría desconocida': 'Categoría desconocida',
 'Change Password': 'Cambie Contraseña',
 'Change password': 'Change password',
