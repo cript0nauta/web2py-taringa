@@ -62,6 +62,10 @@ def tops():
 
 		return H2(request.vars.tiempo or request.vars.default) + html_posts + html_users
 
+def posts():
+		"""Retorna vía AJAX todos los posts de un usuario"""
+		pass
+
 def index():
 	if len(request.args):
 		# Le pasamos una categoria
@@ -143,14 +147,23 @@ def post():
 def profile():
 		""" Ver el perfil de algún usuario """
 		response.files.append(URL(c='static',f='css/avatar.css'))
+		response.files.append(URL(c='static',f='css/profile.css'))
 		user = db(db.auth_user.username==request.args(0)).select()
 		if not user:
 				response.flash='El perfil no existe'
 				return dict(user=None)
 		user = user[0]
-		posts = db(db.post.autor==user.id).select()
+		posts = db(db.post.autor==user.id).select(\
+						orderby=~db.post.creado)[:MAX_POSTS]
+		comentarios = user.comentario.select(\
+						orderby=~db.comentario.id)[:MAX_POSTS]
 		puntos = sum([post.puntos for post in posts])
-		return dict(user=user, posts=posts, puntos=puntos)
+		return dict(
+						user = user, 
+						posts = posts, 
+						puntos = puntos,
+						comentarios = comentarios,
+						)
 
 @auth.requires_login()
 def newpost():

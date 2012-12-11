@@ -25,7 +25,7 @@
 	<h4>Comentarios</h4>
 	{{if comentarios:}}
 	{{for comentario in comentarios:}}
-	<article>
+	<article id="comment-{{=comentario.id}}">
 			<header><strong>{{=A(comentario.autor.username, _href=URL(f='profile',args=comentario.autor.username))}} dijo:</strong></header>
 			{{=comentario.contenido}}
 	</article>
