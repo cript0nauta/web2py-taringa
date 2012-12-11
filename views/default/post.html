@@ -3,7 +3,7 @@
 
 <header>
 	Autor: {{=A(post.autor.username, _href=URL(f='profile',args=post.autor.username))}} <br>
-	{{if post.autor.id == auth.user.id:}}
+	{{if post.autor.id == auth.user.id if auth.user else None:}}
 	{{=A(T('Editar post'), _href=URL(f='edit',args=post.id))}}<br>
 	{{pass}}
 </header>

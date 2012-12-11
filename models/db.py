@@ -131,8 +131,6 @@ db.define_table('post',
 		Field('puntos', 'integer'),
 		Field('creado','datetime'),
 		)
-db.post.categoria.requires = IS_NOT_EMPTY()
-
 db.post.autor.readable = False
 db.post.autor.writable = False
 db.post.autor.default = auth.user.id if auth.user else None
@@ -151,7 +149,12 @@ db.post.categoria.requires = IS_IN_DB(db, db.categoria.id, '%(nombre)s' )
 db.define_table('comentario',
 		Field('post', db.post),
 		Field('autor', db.auth_user),
-		Field('contenido')
+		Field('contenido', 'text')
 		)
 db.comentario.autor.readable = False
 db.comentario.autor.writable = False
+db.comentario.autor.requires = IS_IN_DB(db, db.auth_user.id, '%(username)s')
+
+db.comentario.post.readable = False
+db.comentario.post.writable = False
+db.comentario.post.requires = IS_IN_DB(db, db.post.id, '%(titulo)s')

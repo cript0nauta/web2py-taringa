@@ -16,10 +16,10 @@
 		<script type="text/javascript">
 			//Chequeamos por defecto el primer radio
 			$('#tops_form input[type=radio]:first').attr('checked','1');
-			$('#tops_form input[type=radio]').attr('onchange', "ajax('tops',['tiempo'],'tops'); return false");
+			$('#tops_form input[type=radio]').attr('onchange', "ajax('{{=URL(f='tops')}}',['tiempo'],'tops'); return false");
 
 			// Cargamos los posts semanales por defecto
-			ajax('tops',['tiempo'],'tops');
+			ajax('{{=URL(f='tops')}}',['tiempo'],'tops');
 			$('#tops_form input').addClass('btn-mini btn-info');
 		</script>
 
