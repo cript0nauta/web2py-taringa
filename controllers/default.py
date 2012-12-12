@@ -108,6 +108,7 @@ def index():
 			tops_form = tops_form)
 
 def post():
+	response.files.append(URL(c='static',f='css/puntuar.css'))
 	if len(request.args)==1:
 		post = db(db.post.id==request.args[0]).select()
 		post = post[0] if post else None
@@ -118,13 +119,13 @@ def post():
 			inputs = [SPAN(INPUT(_type='radio', 
 						_name='puntos', _value=i,
 						requires = IS_INT_IN_RANGE(1,user.puntos+1)), 
-						i,XML('<br>')) \
+						i) \
 					for i in range(1,user.puntos + 1)]
 			if not inputs:
 					inputs.append(T('No te quedan puntos para dar hoy'))
 			else:
 					inputs.append(INPUT(_type='submit', _value=T('Puntuar')))
-			puntuar = FORM(*inputs)
+			puntuar = FORM(*inputs, _id="puntuar")
 			if puntuar.accepts(request.vars, session):
 					response.flash = T('Puntuaste el post con %s puntos',\
 									request.vars.puntos)
