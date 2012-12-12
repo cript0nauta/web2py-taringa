@@ -127,6 +127,8 @@ def post():
 					inputs.append(INPUT(_type='submit', _value=T('Puntuar')))
 			puntuar = FORM(*inputs, _id="puntuar")
 			if puntuar.accepts(request.vars, session):
+					if post.autor.id == auth.user.id:
+							return T('No te podés puntuar a vos mismo')
 					response.flash = T('Puntuaste el post con %s puntos',\
 									request.vars.puntos)
 					puntos_post = post.puntos + int(request.vars.puntos)

@@ -243,6 +243,7 @@
 'NO': 'NO',
 'No databases in this application': 'No hay bases de datos en esta aplicación',
 'No puede estar vacío': 'No puede estar vacío',
+'No te podés puntuar a vos mismo': 'No te podés puntuar a vos mismo',
 'No te quedan puntos para dar hoy': 'No te quedan puntos para dar hoy',
 'Novato': 'Novato',
 'Nuevo post': 'Nuevo post',
