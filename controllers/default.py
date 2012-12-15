@@ -177,6 +177,8 @@ def profile():
 						posts = posts, 
 						puntos = puntos,
 						comentarios = comentarios,
+						nposts = len(db(db.post.autor==user.id).select()),
+						ncom = len(db(db.comentario.autor==user.id).select()),
 						)
 
 @auth.requires_login()

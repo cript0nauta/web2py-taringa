@@ -8,11 +8,14 @@
 		{{pass}}
 		<h2>{{=user.first_name}} {{=user.last_name}}</h2>
 		{{=IMG(_src=URL(f='download',args=user.avatar), _class='avatar') if user.avatar else IMG(_src=URL(c='static',f='images/default_avatar.png'))}}<br>
-		{{=puntos}} puntos<br>
+		{{=T("%s puntos",puntos)}} <br />
+		{{=T("%s posts",nposts)}} <br />
+		{{=T("%s comentarios",ncom)}} <br />
 		{{=globals()['db'].auth_user.rango(user.id)}}<br>
 </header>
 
 <input type="hidden" name="u" value="{{=user.id}}"/>
+{{if posts:}}
 <div class="columna">
         <header><h3>{{=T('Posts')}}</h3></header>
 		<div id="posts">
@@ -24,6 +27,8 @@
 				<a href="#" class="btn" onclick="ajax('{{=URL(f='posts')}}', ['u'], 'posts')">{{=T("Cargar más posts")}}</a>
 		</div>
 </div>
+{{pass}}
+{{if comentarios:}}
 <div class="columna">
 		<header><h3>{{=T('Comentarios')}}</h3></header>
 		<div id="comentarios">
@@ -35,4 +40,5 @@
 				<a onclick="ajax('{{=URL(f='comentarios')}}', ['u'], 'comentarios')" href="#" class="btn">{{=T("Cargar más comentarios")}}</a>
 		</div>
 </div>
+{{pass}}
 {{pass}}
