@@ -2,6 +2,8 @@ Clon de Taringa! programado en web2py
 Autor: Matías Lang <sh4r3m4n>
 Email: shareman1204 [ARROBA] gmail [PUNTO] com
 
+Luego de instalar, modificar el archivo cron/crontab modificando root por el
+nombre de usuario que esté corriendo el servidor.
 Asegurarse que cuando se corra el servidor se active el proceso de cron. En el
 servidor de pruebas de web2py esto se logra usando la opción -Y.
 

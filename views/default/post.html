@@ -5,7 +5,8 @@
 {{block right_sidebar}}
 		<h3>{{=A(post.autor.username, _href=URL(f='profile',args=post.autor.username))}}</h3>
 		Puntos: {{=globals()['db'].auth_user.puntos_totales(post.autor.id)}}<br />
-		{{=IMG(_src=URL(f='download',args=post.autor.avatar))}}
+		{{#=IMG(_src=URL(f='download',args=post.autor.avatar))}}
+		{{=IMG(_src=URL(f='download',args=post.autor.avatar), _class='avatar') if post.autor.avatar else IMG(_src=URL(c='static',f='images/default_avatar.png'))}}<br>
 {{end}}
 
 <header>
