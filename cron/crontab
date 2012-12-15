@@ -1,1 +1,4 @@
 #crontab
+#* * * * * *cron/bot.py
+#* * * * * root *applications/taringa/cron/bot.py
+0 0 * * * root *applications/taringa/cron/puntos.py
