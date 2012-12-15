@@ -1,2 +1,17 @@
-Write something about this app.
-Developed with web2py.
+Clon de Taringa! programado en web2py
+Autor: Matías Lang <sh4r3m4n>
+Email: shareman1204 [ARROBA] gmail [PUNTO] com
+
+Luego de instalar, modificar el archivo cron/crontab modificando root por el
+nombre de usuario que esté corriendo el servidor.
+Asegurarse que cuando se corra el servidor se active el proceso de cron. En el
+servidor de pruebas de web2py esto se logra usando la opción -Y.
+
+Funciones:
+ . Creación y edición de posts
+ . Posts organizados por categorías
+ . Se muestran los top usuarios y posts en un lapso de tiempo
+ . Los usuarios son NFU al tener un post con 50 o más puntos
+ . Los NFU dan 10 puntos por día y los novatos 3
+ . Cada post se puede comentar. Si se especifica, solo lo comentan usuarios
+   del mismo rango que su creador
