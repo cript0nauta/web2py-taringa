@@ -350,6 +350,7 @@
 'This is a copy of the scaffolding application': 'Esta es una copia de la aplicación de andamiaje',
 'This is the %(filename)s template': 'Esta es la plantilla %(filename)s',
 'Ticket': 'Tiquete',
+'Tienes que estar logueado para poder comentar': 'Tienes que estar logueado para poder comentar',
 'Time in Cache (h:m:s)': 'Time in Cache (h:m:s)',
 'Timestamp': 'Timestamp',
 'to  previous version.': 'a la versión previa.',

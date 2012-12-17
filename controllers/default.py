@@ -114,7 +114,7 @@ def post():
 		post = post[0] if post else None
 		if not post:
 			raise HTTP(404)
-		if auth.user:
+		if auth.user and auth.user.id != post.autor.id:
 			user = db(db.auth_user.id==auth.user.id).select()[0]
 			inputs = [SPAN(INPUT(_type='radio', 
 						_name='puntos', _value=i,
@@ -141,7 +141,7 @@ def post():
 			elif puntuar.errors:
 					response.flash = T('Datos incorrectos')
 		else:
-			puntuar = None
+			puntuar = ""
 		comentarios = post.comentario.select()
 		if auth.user:
 				db.comentario.post.default = post.id
