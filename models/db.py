@@ -59,7 +59,6 @@ db.define_table(
 	Field('username', length=40),
 	Field('puntos','integer'), #puntos que puede dar
 	Field('avatar','upload'),
-	Field('creado','datetime'),
 	)
 custom_auth_table = db[auth.settings.table_user_name] # get the custom_auth_table
 custom_auth_table.username.requires = IS_NOT_IN_DB(db, custom_auth_table.username)
