@@ -34,7 +34,7 @@
 		<div id="comentarios">
 				<ul>
 				{{for comentario in comentarios:}}
-						{{=LI(T("En el post"),' ',A(comentario.contenido, _href=URL(f='post',args=comentario.post)+'#comment-'+str(comentario.id) ))}}	
+						{{=LI(T("En el post"),' ',A(comentario.post.titulo, _href=URL(f='post',args=comentario.post)+'#comment-'+str(comentario.id) ))}}	
 				{{pass}}
 				</ul>
 				<a onclick="ajax('{{=URL(f='comentarios')}}', ['u'], 'comentarios')" href="#" class="btn">{{=T("Cargar más comentarios")}}</a>
